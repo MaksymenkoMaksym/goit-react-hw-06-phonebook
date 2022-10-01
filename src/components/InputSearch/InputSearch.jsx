@@ -14,6 +14,7 @@ const InputSearch = ({ nameSearch, onSearchName }) => {
     </Label>
   );
 };
+
 InputSearch.propTypes = {
   nameSearch: PropTypes.string.isRequired,
   onSearchName: PropTypes.func.isRequired,

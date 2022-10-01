@@ -1,11 +1,17 @@
 import { nanoid } from 'nanoid';
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PhoneBookForm from './PhoneBookForm/PhoneBookForm';
 import ContactsList from './ContactsList/ContactsList';
 import Section from './Section/Section';
 import InputSearch from './InputSearch/InputSearch';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAddContact, getDeleteContact } from 'redux/action';
 
-export const App1 = () => {
+export const App = () => {
+  const contactsR = useSelector(state => state);
+
+  const dispatch = useDispatch();
+  console.log('contactsR', contactsR.contacts.contacts);
   const [filter, setFilter] = useState('');
 
   const [contacts, setContacts] = useState(() => {
@@ -31,11 +37,11 @@ export const App1 = () => {
   }, [contacts]);
 
   const onInputContact = user => {
-    if (contacts.some(contact => contact.name === user.name)) {
+    if (contactsR.some(contact => contact.name === user.name)) {
       return alert(`${user.name} is already in contacts.`);
     }
     user.id = nanoid();
-    setContacts(prevState => [...prevState, user]);
+    dispatch(getAddContact(user));
   };
 
   const findByName = value => {
@@ -51,7 +57,7 @@ export const App1 = () => {
   };
 
   const onClickDelete = id => {
-    setContacts(prevState => prevState.filter(contact => contact.id !== id));
+    dispatch(getDeleteContact(id));
   };
   return (
     <div>

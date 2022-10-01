@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Ul, Li } from './ContactList.styled';
 
 const ContactsList = ({ contacts, onClickDelete }) => {
+  console.log(contacts);
   if (!contacts.length) {
     return <p>No results</p>;
   }
