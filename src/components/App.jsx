@@ -1,12 +1,17 @@
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 // import React, { useState, useEffect } from 'react';
 import PhoneBookForm from './PhoneBookForm/PhoneBookForm';
 import ContactsList from './ContactsList/ContactsList';
 import Section from './Section/Section';
 import InputSearch from './InputSearch/InputSearch';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAddContact, getDeleteContact, getFindByName } from 'redux/action';
+// import { getAddContact, getDeleteContact, getFindByName } from 'redux/action';
 import { getContacts, getFilter } from 'redux/selectors';
+import {
+  getAddContact,
+  getDeleteContact,
+  getFindByName,
+} from 'redux/contactsSlice';
 export const App = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
@@ -16,7 +21,6 @@ export const App = () => {
     if (contacts.some(contact => contact.name === user.name)) {
       return alert(`${user.name} is already in contacts.`);
     }
-    user.id = nanoid();
     dispatch(getAddContact(user));
   };
 
@@ -47,23 +51,3 @@ export const App = () => {
     </div>
   );
 };
-
-/*
-  const [contactsR, setContacts] = useState(() => {
-    const contact = localStorage.getItem('contacts1');
-    try {
-      if (contact) {
-        const parsedContacts = JSON.parse(contact);
-        return parsedContacts;
-      }
-      return [
-        { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-        { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-        { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-        { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-      ];
-    } catch (error) {
-      console.log(error);
-    }
-  });
-  */

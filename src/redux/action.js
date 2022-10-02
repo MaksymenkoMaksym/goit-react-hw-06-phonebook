@@ -1,14 +1,13 @@
-export const getDeleteContact = id => ({
-  type: 'contacts/getDeleteContact',
-  payload: id,
-});
+import { createAction } from '@reduxjs/toolkit';
+import { nanoid } from '@reduxjs/toolkit';
 
-export const getAddContact = user => ({
-  type: 'contacts/getAddContact',
-  payload: user,
+export const getDeleteContact = createAction('contacts/getDeleteContact');
+export const getAddContact = createAction('contacts/getAddContact', user => {
+  return {
+    payload: {
+      ...user,
+      id: nanoid(),
+    },
+  };
 });
-
-export const getFindByName = contact => ({
-  type: 'contacts/getFindByName',
-  payload: contact,
-});
+export const getFindByName = createAction('contacts/getFindByName');

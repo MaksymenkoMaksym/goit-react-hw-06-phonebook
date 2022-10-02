@@ -1,4 +1,5 @@
-import { combineReducers } from 'redux';
+import { createReducer } from '@reduxjs/toolkit';
+import { getAddContact, getDeleteContact, getFindByName } from './action';
 
 const initialState = {
   contacts: [
@@ -10,37 +11,36 @@ const initialState = {
   filter: '',
 };
 
-// console.log(initialState);
-const contactsReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'contacts/getDeleteContact':
-      return {
-        ...state,
-        contacts: state.contacts.filter(
-          contact => contact.id !== action.payload
-        ),
-      };
-    case 'contacts/getAddContact':
-      console.log(state);
-      return { ...state, contacts: [...state.contacts, action.payload] };
-    case 'contacts/getFindByName':
-      if (!action.payload) {
-        return {
-          ...state,
-          filter: '',
-        };
-      }
-      return {
-        ...state,
-        filter: state.contacts.filter(contact =>
-          contact.name.toLocaleLowerCase().includes(action.payload)
-        ),
-      };
-    default:
-      return state;
-  }
-};
+export const contactsReducer = createReducer(initialState, {
+  [getDeleteContact]: (state, action) => {
+    return {
+      ...state,
+      contacts: state.contacts.filter(contact => contact.id !== action.payload),
+    };
+  },
 
-export const rootReducer = combineReducers({
-  contacts: contactsReducer,
+  [getAddContact]: (state, action) => {
+    return { ...state, contacts: [...state.contacts, action.payload] };
+  },
+
+  [getFindByName]: (state, action) => {
+    //immer library
+    if (!action.payload) {
+      state.filter = '';
+    }
+    state.filter = state.contacts.filter(contact =>
+      contact.name.toLocaleLowerCase().includes(action.payload)
+    );
+    // without mutation
+    // return {
+    //   ...state,
+    //   filter: '',
+    // };
+    // return {
+    //   ...state,
+    //   filter: state.contacts.filter(contact =>
+    //     contact.name.toLocaleLowerCase().includes(action.payload)
+    //   ),
+    // };
+  },
 });
