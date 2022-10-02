@@ -9,14 +9,33 @@ const initialState = {
   ],
   filter: '',
 };
+
+// console.log(initialState);
 const contactsReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'contacts/getDeleteContact':
-      return state.contacts.filter(contact => contact.id !== action.payload);
+      return {
+        ...state,
+        contacts: state.contacts.filter(
+          contact => contact.id !== action.payload
+        ),
+      };
     case 'contacts/getAddContact':
-      return [...state.contacts.contacts, action.payload];
-    case 'contacts/getFilterContacts':
-      return;
+      console.log(state);
+      return { ...state, contacts: [...state.contacts, action.payload] };
+    case 'contacts/getFindByName':
+      if (!action.payload) {
+        return {
+          ...state,
+          filter: '',
+        };
+      }
+      return {
+        ...state,
+        filter: state.contacts.filter(contact =>
+          contact.name.toLocaleLowerCase().includes(action.payload)
+        ),
+      };
     default:
       return state;
   }

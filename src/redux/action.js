@@ -8,7 +8,7 @@ export const getAddContact = user => ({
   payload: user,
 });
 
-export const getFilterContacts = contact => ({
-  type: 'contacts/getFilterContacts',
+export const getFindByName = contact => ({
+  type: 'contacts/getFindByName',
   payload: contact,
 });

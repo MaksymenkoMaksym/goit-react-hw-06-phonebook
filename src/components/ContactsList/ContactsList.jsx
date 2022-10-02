@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Button, Ul, Li } from './ContactList.styled';
 
 const ContactsList = ({ contacts, onClickDelete }) => {
-  console.log(contacts);
+  // console.log('contacts', contacts);
   if (!contacts.length) {
-    return <p>No results</p>;
+    return <p>No any data</p>;
   }
   return (
     <Ul>
